@@ -8,3 +8,16 @@ I hate GUI, I hate to be distracted by notifications 'Moments', 'Mini Programs' 
 Debian netinst CD image: 150-300 MB
 
 Wechat 7.0.22 apk: 172 MB
+
+
+# Useful Links
+https://github.com/littlecodersh/ItChat
+
+https://itchat.readthedocs.io/zh/latest/
+
+https://github.com/lim1942/cmd_wechat
+
+https://github.com/oneatletico/cmd-wechat-terminal
+
+https://github.com/aijialin/wechatManager
+
