@@ -1,6 +1,7 @@
 *.swp
 *.out
 *.class
-itchat.pkl
+*.pkl
 *.png
+*.gif
 Back/

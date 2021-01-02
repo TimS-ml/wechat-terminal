@@ -1,46 +1,38 @@
-import time
-import itchat
+# -*- coding: utf-8 -*-
+
+from os import system, path
 import _thread
 import logging
-from os import system
+
+import pickle
+import itchat
 from itchat.content import *
 from termcolor import cprint, colored
 from pyfiglet import Figlet
 
-# user name of this account
-username = str()
-# last message FROM (receive msg from) and TO (send msg to)
-last_from, last_to = str(), str()
-# all WeChat friends and the last 5 WeChat contacts
-all_friends, recent_friends = [], []
-# thread resource lock
+from utils import *
+
+if path.exists('./stuff.pkl'):
+    with open('./stuff.pkl', 'rb') as f:
+        username = pickle.load(f)
+        [last_from, last_to] = pickle.load(f)
+        [all_friends, recent_friends] = pickle.load(f)
+    print('Variable loaded')
+else:
+    username = str()
+    last_from, last_to = str(), str()
+    all_friends, recent_friends = [], []
+
 f_lock = _thread.allocate_lock()
 
-# @itchat.msg_register(itchat.content.TEXT)
-# def debug_msg(msg):
-#     "monitor new message to call this function and show all info of message"
-#     print(msg)
 
-
-def show_help():
-    "print help guide in terminal"
-    print("""
-        Command List
-            all                      List all WeChat friends of this account
-            ls                       List the last 5 WeChat contacts of this accound
-            h                        Show this help guide
-            q                        Log out
-            s <message>              Send a message to the last TO (you send msg to)
-            re <message>             Send a message to the last FROM (you receive msg from)
-            s <message> | <name>     Send a message to a friend specified by name
-            s <message> || <num>     Send a message to a friend specified by num
-            s @fil@<filename>        Send a file (@img@ for image, @vid@ for video)
-        """)
+@itchat.msg_register(itchat.content.TEXT)
+def debug_msg(msg):
+    "monitor new message to call this function and show all info of message"
+    print(msg)
 
 
 def cmd_ctrl():
-    # command = input(colored('~> ', 'green', attrs=['bold']))
-    # cprint('\n==================================\n', 'magenta')
     command = input('> ')
     command = command.strip()
     command_ = command.casefold()
@@ -53,16 +45,22 @@ def cmd_ctrl():
     elif command_ == "c":
         system('clear')
     elif command_ == "exit" or command_ == "q":
+        save_var(username, [last_from, last_to], [all_friends, recent_friends])
         itchat.logout()
+        custom_fig = Figlet(font='basic')  # whimsy / contessa / basic
+        print(custom_fig.renderText('Bye'))
+    elif command_ == "ls":
+        show_list(recent_friends, all_friends)
         print()
     elif command_ == "all":
-        show_list(all_friends)
+        show_list(all_friends, all_friends)
         print()
-    elif command_ == "ls":
-        show_list(recent_friends)
+    elif command.startswith("f"):
+        find_friend(command, all_friends)
         print()
     elif command.startswith("s") or command.startswith("re"):
-        send_format(command)
+        m, n = send_format(command, last_from, last_to)
+        send_msg(m, n)
         print()
     else:
         print("[lol] Invalid Input!")
@@ -70,7 +68,7 @@ def cmd_ctrl():
 
 def launcher_loop():
     "get command from terminal"
-    custom_fig = Figlet(font='basic')  # italic / contessa / basic
+    custom_fig = Figlet(font='basic')  # whimsy / contessa / basic
     print(custom_fig.renderText('Welcome'))
     # loop for refresh info
     while 1:
@@ -87,11 +85,6 @@ def launcher_loop():
     # loop for get command input
     while 1:
         cmd_ctrl()
-
-
-def get_time():
-    "get time and format it"
-    return time.strftime('%H:%M:%S')
 
 
 def get_info():
@@ -111,17 +104,22 @@ def get_info():
 
 
 def update_friends(friend_name):
-    "update wechat friends list"
+    "update friends list's order"
     global all_friends, recent_friends
     # lock data to ensure atomicity
     f_lock.acquire()
+
     # insert last friend name to front of list
-    if friend_name in recent_friends: recent_friends.remove(friend_name)
+    if friend_name in recent_friends:
+        recent_friends.remove(friend_name)
     recent_friends.insert(0, friend_name)
-    if friend_name in all_friends: all_friends.remove(friend_name)
+
+    if friend_name in all_friends:
+        all_friends.remove(friend_name)
     all_friends.insert(0, friend_name)
+
     # control recent list length
-    if len(recent_friends) > 5:
+    if len(recent_friends) > 10:
         recent_friends.pop()
     # release lock after update data
     f_lock.release()
@@ -149,78 +147,10 @@ def send_msg(content, friend_name):
             time_ = get_time()
             print(f"[{time_}] {username} -> {friend_name} : {content}")
             # update friend list and last TO
-            if all_friends: update_friends(friend_name)
+            if all_friends:
+                update_friends(friend_name)
             global last_to
             last_to = friend_name
-
-
-def send_format(command):
-    "format send/reply command"
-    # send default set to last TO
-    if command.startswith("s"):
-        command = command.strip("s").strip()
-        default = "TO"
-    # reply default set to last FROM
-    elif command.startswith("re"):
-        command = command.strip("re").strip()
-        default = "FROM"
-    # exit function if there is error
-    else:
-        print("[ERROR] Unspecified Error!")
-        return -1
-
-    # use TO by number if specified
-    if command.find("||") >= 0:
-        message = command.split(sep="||", maxsplit=1)[0].strip()
-        number = command.split(sep="||", maxsplit=1)[1].strip()
-        # try to transfer number from string to int
-        try:
-            number = int(number)
-        except Exception as e:
-            print("[ERROR] The specified num format is incorrect!")
-            return -1
-        else:
-            if number <= 0 or number > len(all_friends):
-                print("[ERROR] The specified num is out of index!")
-                return -1
-            else:
-                friend_name = all_friends[number - 1]
-    # use TO by name if specified
-    elif command.find("|") >= 0:
-        message = command.split(sep="|", maxsplit=1)[0].strip()
-        friend_name = command.split(sep="|", maxsplit=1)[1].strip()
-    # not specified TO, set as default
-    else:
-        message = command
-        global last_from, last_to
-        # "send", set TO as name
-        if default == "TO":
-            if last_to:
-                friend_name = last_to
-            else:
-                print("[WARN] No Last TO! Please specify reveiver")
-                print("e.g. > s <message> | <receiver name>")
-                return -1
-        # "reply", set FROM as name
-        else:
-            if last_from:
-                friend_name = last_from
-            else:
-                print("[WARN] No Last FROM! Please specify reveiver")
-                print("e.g. > s <message> | <receiver name>")
-                return -1
-    # call function send message
-    send_msg(message, friend_name)
-
-
-def show_list(friends):
-    "show friends list"
-    if all_friends:
-        for index, friend_name in enumerate(friends):
-            index += 1
-            print(f"{index}. {friend_name}\t", end="")
-    else:
-        print("No friend in this list")
 
 
 @itchat.msg_register(TEXT)
@@ -244,13 +174,15 @@ def receive_msg(msg):
         print(f"\n[{time_}] {username} -> {friend_name} : {content}\n> ",
               end='')
     # update friend list and last FROM
-    if all_friends: update_friends(friend_name)
+    if all_friends:
+        update_friends(friend_name)
     global last_from
     last_from = friend_name
 
 
 @itchat.msg_register([PICTURE, RECORDING, ATTACHMENT, VIDEO])
 def download_files(msg):
+    global last_from
     # download it
     msg.download(msg.fileName)
     # get message time
@@ -271,22 +203,20 @@ def download_files(msg):
             f"\n[{time_}] {username} -> {friend_name} : {msg.fileName} send\n> ",
             end='')
     # update friend list and last FROM
-    if all_friends: update_friends(friend_name)
-    global last_from
+    if all_friends:
+        update_friends(friend_name)
     last_from = friend_name
 
 
-def main():
-    "main function"
-    # disable itchat debug log
-    logging.disable(logging.DEBUG)
-    # create a thread for monitor command
-    _thread.start_new_thread(launcher_loop, ())
-    # itchat login
-    itchat.auto_login(hotReload=True)
-    # itchat run
-    itchat.run(True)
+def save_var(username, last, friends):
+    with open('./stuff.pkl', 'wb') as f:
+        pickle.dump(username, f)
+        pickle.dump(last, f)
+        pickle.dump(friends, f)
 
 
-if __name__ == '__main__':
-    main()
+# Main
+logging.disable(logging.DEBUG)  # disable itchat debug log
+_thread.start_new_thread(launcher_loop, ())  # call launcher loop
+itchat.auto_login(hotReload=True)
+itchat.run(True)
