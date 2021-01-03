@@ -24,7 +24,7 @@ def find_friend(command, all_friends):
             print(key + 1, friend_name)
 
 
-def send_format(command, last_from, last_to):
+def send_format(command, last_from, last_to, all_friends):
     "format send/reply command"
     # send default set to last TO
     if command.startswith("s"):

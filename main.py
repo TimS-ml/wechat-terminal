@@ -19,7 +19,7 @@ if path.exists('./stuff.pkl'):
         [last_from, last_to] = pickle.load(f)
         [all_friends, recent_friends] = pickle.load(f)
     print('Variable loaded')
-    print(all_friends)
+    # print(all_friends)
 else:
     username = str()
     last_from, last_to = str(), str()
@@ -62,7 +62,7 @@ def cmd_ctrl():
         find_friend(command, all_friends)
         print()
     elif command.startswith("s") or command.startswith("re"):
-        m, n = send_format(command, last_from, last_to)
+        m, n = send_format(command, last_from, last_to, all_friends)
         send_msg(m, n)
         print()
     else:
