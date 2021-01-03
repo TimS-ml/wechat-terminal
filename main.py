@@ -152,7 +152,9 @@ def send_msg(content, friend_name):
         else:
             # output sent message
             time_ = get_time()
-            print(f"  [{time_}] {username}=>{friend_name} : {content}")
+            print(Fore.MAGENTA + f"  [{time_}] " + Style.RESET_ALL +
+                  Fore.CYAN + f"{username}=>{friend_name}" + Style.RESET_ALL +
+                  f": {content}")
             # update friend list and last TO
             if all_friends:
                 update_friends(friend_name)
@@ -174,13 +176,15 @@ def receive_msg(msg):
         friend_name = msg['User']['UserName']
     # show received message
     if msg['FromUserName'] == msg['User']['UserName']:
-        print(f"\n  [{time_}] {friend_name}=>{username} : {content}\n" +
-              Fore.YELLOW + "~> " + Style.RESET_ALL,
+        print(Fore.MAGENTA + f"\n  [{time_}] " + Style.RESET_ALL + Fore.CYAN +
+              f"{friend_name}=>{username}" + Style.RESET_ALL +
+              f": {content}\n" + Fore.YELLOW + "~> " + Style.RESET_ALL,
               end='')
     # show sent message
     else:
-        print(f"\n  [{time_}] {username}=>{friend_name} : {content}\n" +
-              Fore.YELLOW + "~> " + Style.RESET_ALL,
+        print(Fore.MAGENTA + f"\n  [{time_}] " + Style.RESET_ALL + Fore.CYAN +
+              f"{username}=>{friend_name}" + Style.RESET_ALL +
+              f": {content}\n" + Fore.YELLOW + "~> " + Style.RESET_ALL,
               end='')
     # update friend list and last FROM
     if all_friends:
@@ -203,16 +207,18 @@ def download_files(msg):
         friend_name = msg['User']['UserName']
     # show received message
     if msg['FromUserName'] == msg['User']['UserName']:
-        print(
-            f"\n  [{time_}] {friend_name}=>{username} : {msg.fileName} received\n"
-            + Fore.YELLOW + "~> " + Style.RESET_ALL,
-            end='')
+        print(Fore.MAGENTA + f"\n  [{time_}] " + Style.RESET_ALL + Fore.CYAN +
+              f"{friend_name}=>{username}" + Style.RESET_ALL +
+              f": {msg.fileName}" + Fore.MAGENTA + " received\n" +
+              Style.RESET_ALL + Fore.YELLOW + "~> " + Style.RESET_ALL,
+              end='')
     # show sent message
     else:
-        print(
-            f"\n  [{time_}] {username}=>{friend_name} : {msg.fileName} send\n"
-            + Fore.YELLOW + "~> " + Style.RESET_ALL,
-            end='')
+        print(Fore.MAGENTA + f"\n  [{time_}] " + Style.RESET_ALL + Fore.CYAN +
+              f"{username}=>{friend_name}" + Style.RESET_ALL +
+              f": {msg.fileName}" + Fore.MAGENTA + " sent\n" +
+              Style.RESET_ALL + Fore.YELLOW + "~> " + Style.RESET_ALL,
+              end='')
     # update friend list and last FROM
     if all_friends:
         update_friends(friend_name)

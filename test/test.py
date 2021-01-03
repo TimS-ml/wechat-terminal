@@ -5,6 +5,6 @@ init()
 username = 'lol'
 
 print(
-    f"\n{username} received\n",
+    f"\n{username} received" + f" {username} hahah\n",
     end='')
 print(Fore.YELLOW + "~> " + Style.RESET_ALL)
