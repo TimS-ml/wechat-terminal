@@ -9,7 +9,7 @@ def save_var(username, last, friends):
         pickle.dump(username, f)
         pickle.dump(last, f)
         pickle.dump(friends, f)
-    print('Variable saved')
+    print('Variable saved\n')
 
 
 def load_var():
@@ -32,37 +32,43 @@ def get_time():
     return time.strftime('%H:%M:%S')
 
 
-def show_list(friends, all_friends):
+def show_list(friends):
     "show friends list"
-    if all_friends:
-        L = len(friends)
-        index = [i for i in range(1, L + 1)]
-        if L < 50:
-            temp = list(zip(index, friends))
-            print(tabulate(temp))
-        else:
-            temp = list(
-                zip(
-                    index[:int(L / 4)],
-                    friends[:int(L / 4)],
-                    index[int(L / 4):int(L / 2)],
-                    friends[int(L / 4):int(L / 2)],
-                    index[int(L / 2):int(L * 3 / 4)],
-                    friends[int(L / 2):int(L * 3 / 4)],
-                    index[int(L * 3 / 4):int(L)],
-                    friends[int(L * 3 / 4):int(L)],
-                ))
-            print(tabulate(temp))
+    L = len(friends)
+    index = [i for i in range(1, L + 1)]
+    if L < 20:
+        # temp = list(zip(index, friends))
+        temp = list(
+            zip(
+                index[:int(L / 2)],
+                friends[:int(L / 2)],
+                index[int(L / 2):int(L)],
+                friends[int(L / 2):int(L)],
+            ))
+        print(tabulate(temp))
     else:
-        print("No friend in this list")
+        temp = list(
+            zip(
+                index[:int(L / 4)],
+                friends[:int(L / 4)],
+                index[int(L / 4):int(L / 2)],
+                friends[int(L / 4):int(L / 2)],
+                index[int(L / 2):int(L * 3 / 4)],
+                friends[int(L / 2):int(L * 3 / 4)],
+                index[int(L * 3 / 4):int(L)],
+                friends[int(L * 3 / 4):int(L)],
+            ))
+        print(tabulate(temp))
 
 
 def find_friend(command, all_friends):
     "filter friends by kws"
     kws = command.strip("f").strip()
+    temp = []
     for key, friend_name in enumerate(all_friends):
         if kws in friend_name:
-            print(key + 1, friend_name)
+            temp.append([key+ 1, friend_name])
+    print(tabulate(temp))
 
 
 def send_format(command, last_from, last_to, all_friends):

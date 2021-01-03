@@ -8,7 +8,7 @@ import itchat
 from itchat.content import *
 from termcolor import cprint, colored
 from colorama import init, Fore, Back, Style
-from pyfiglet import Figlet
+# from pyfiglet import Figlet
 
 from utils import *
 
@@ -39,35 +39,44 @@ def cmd_ctrl():
             time.sleep(2)
         else:
             print("Loading friends list...")
-        print()
+        # print()
     elif command_ == "c":
         system('clear')
     elif command_ == "exit" or command_ == "q":
         save_var(username, [last_from, last_to], [all_friends, recent_friends])
-        custom_fig = Figlet(font='basic')  # whimsy / contessa / basic
-        print(custom_fig.renderText('Bye ~'))
+        # custom_fig = Figlet(font='basic')  # whimsy / contessa / basic
+        # print(custom_fig.renderText('Bye ~'))
+        print(Fore.YELLOW + 'Bye ~' + Style.RESET_ALL)
         itchat.logout()
     elif command_ == "ls":
-        show_list(recent_friends, all_friends)
-        print()
+        if all_friends:
+            show_list(recent_friends)
+        else:
+            print("No friend in this list")
+        # print()
     elif command_ == "all":
-        show_list(all_friends, all_friends)
-        print()
+        if all_friends:
+            show_list(all_friends)
+        else:
+            print("No friend in this list")
+        # print()
     elif command.startswith("f"):
         find_friend(command, all_friends)
-        print()
+        # print()
     elif command.startswith("s") or command.startswith("re"):
         m, n = send_format(command, last_from, last_to, all_friends)
         send_msg(m, n)
-        print()
+        # print()
     else:
         print("[lol] Invalid Input!")
 
 
 def launcher_loop():
     "get command from terminal"
-    custom_fig = Figlet(font='basic')  # whimsy / contessa / basic
-    print(custom_fig.renderText('Welcome'))
+    # custom_fig = Figlet(font='basic')  # whimsy / contessa / basic
+    # print(custom_fig.renderText('Welcome'))
+    print(Fore.YELLOW + 'Welcome' + Style.RESET_ALL)
+
     # loop for refresh info
     while 1:
         # get all friends list
@@ -143,7 +152,7 @@ def send_msg(content, friend_name):
         else:
             # output sent message
             time_ = get_time()
-            print(f"[{time_}] {username} -> {friend_name} : {content}")
+            print(f"  [{time_}] {username}=>{friend_name} : {content}")
             # update friend list and last TO
             if all_friends:
                 update_friends(friend_name)
@@ -165,12 +174,12 @@ def receive_msg(msg):
         friend_name = msg['User']['UserName']
     # show received message
     if msg['FromUserName'] == msg['User']['UserName']:
-        print(f"\n[{time_}] {friend_name} -> {username} : {content}\n" +
+        print(f"\n  [{time_}] {friend_name}=>{username} : {content}\n" +
               Fore.YELLOW + "~> " + Style.RESET_ALL,
               end='')
     # show sent message
     else:
-        print(f"\n[{time_}] {username} -> {friend_name} : {content}\n" +
+        print(f"\n  [{time_}] {username}=>{friend_name} : {content}\n" +
               Fore.YELLOW + "~> " + Style.RESET_ALL,
               end='')
     # update friend list and last FROM
@@ -195,13 +204,13 @@ def download_files(msg):
     # show received message
     if msg['FromUserName'] == msg['User']['UserName']:
         print(
-            f"\n[{time_}] {friend_name} -> {username} : {msg.fileName} received\n"
+            f"\n  [{time_}] {friend_name}=>{username} : {msg.fileName} received\n"
             + Fore.YELLOW + "~> " + Style.RESET_ALL,
             end='')
     # show sent message
     else:
         print(
-            f"\n[{time_}] {username} -> {friend_name} : {msg.fileName} send\n"
+            f"\n  [{time_}] {username}=>{friend_name} : {msg.fileName} send\n"
             + Fore.YELLOW + "~> " + Style.RESET_ALL,
             end='')
     # update friend list and last FROM
