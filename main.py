@@ -8,6 +8,7 @@ import pickle
 import itchat
 from itchat.content import *
 from termcolor import cprint, colored
+from colorama import init, Fore, Back, Style
 from pyfiglet import Figlet
 
 from utils import *
@@ -36,7 +37,8 @@ def debug_msg(msg):
 
 
 def cmd_ctrl():
-    command = input('> ')
+    # command = input('> ')
+    command = input(Fore.YELLOW + "~> " + Style.RESET_ALL)
     command = command.strip()
     command_ = command.casefold()
     # skip space
@@ -49,9 +51,9 @@ def cmd_ctrl():
         system('clear')
     elif command_ == "exit" or command_ == "q":
         save_var(username, [last_from, last_to], [all_friends, recent_friends])
-        itchat.logout()
         custom_fig = Figlet(font='basic')  # whimsy / contessa / basic
-        print(custom_fig.renderText('Bye'))
+        print(custom_fig.renderText('Bye ~'))
+        itchat.logout()
     elif command_ == "ls":
         show_list(recent_friends, all_friends)
         print()
@@ -187,7 +189,7 @@ def receive_msg(msg):
 def download_files(msg):
     global last_from
     # download it
-    msg.download(msg.fileName)
+    msg.download('./files/' + msg.fileName)
     # get message time
     time_ = get_time()
     # get message sender

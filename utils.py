@@ -84,13 +84,14 @@ def show_help():
     "print help guide in terminal"
     print("""
   Command
+    h                        Show this help guide
     all                      List all WeChat friends of this account
     ls                       List the last 5 WeChat contacts of this accound
-    h                        Show this help guide
     q                        Log out
+    f <keywords>             Search friends by keywords
     s <message>              Send a message to the last TO (you send msg to)
     re <message>             Send a message to the last FROM (you receive msg from)
-    s <message> | <name>     Send a message to a friend specified by name
-    s <message> || <num>     Send a message to a friend specified by num
+    s <message> -N <name>    Send a message to a friend specified by name
+    s <message> -n <num>     Send a message to a friend specified by num
     s @fil@<filename>        Send a file (@img@ for image, @vid@ for video)
     """)
