@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from os import system, path
+from os import system
 import _thread
 import logging
 
-import pickle
 import itchat
 from itchat.content import *
 from termcolor import cprint, colored
@@ -168,12 +167,14 @@ def receive_msg(msg):
         friend_name = msg['User']['UserName']
     # show received message
     if msg['FromUserName'] == msg['User']['UserName']:
-        print(f"\n[{time_}] {friend_name} -> {username} : {content}\n> ",
+        print(f"\n[{time_}] {friend_name} -> {username} : {content}\n",
               end='')
+        print(Fore.YELLOW + "~> " + Style.RESET_ALL)
     # show sent message
     else:
-        print(f"\n[{time_}] {username} -> {friend_name} : {content}\n> ",
+        print(f"\n[{time_}] {username} -> {friend_name} : {content}\n",
               end='')
+        print(Fore.YELLOW + "~> " + Style.RESET_ALL)
     # update friend list and last FROM
     if all_friends:
         update_friends(friend_name)
@@ -196,13 +197,15 @@ def download_files(msg):
     # show received message
     if msg['FromUserName'] == msg['User']['UserName']:
         print(
-            f"\n[{time_}] {friend_name} -> {username} : {msg.fileName} received\n> ",
+            f"\n[{time_}] {friend_name} -> {username} : {msg.fileName} received\n",
             end='')
+        print(Fore.YELLOW + "~> " + Style.RESET_ALL)
     # show sent message
     else:
         print(
-            f"\n[{time_}] {username} -> {friend_name} : {msg.fileName} send\n> ",
+            f"\n[{time_}] {username} -> {friend_name} : {msg.fileName} send\n",
             end='')
+        print(Fore.YELLOW + "~> " + Style.RESET_ALL)
     # update friend list and last FROM
     if all_friends:
         update_friends(friend_name)
