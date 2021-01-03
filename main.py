@@ -12,10 +12,8 @@ from pyfiglet import Figlet
 
 from utils import *
 
-
 username, last_from, last_to, all_friends, recent_friends = load_var()
 f_lock = _thread.allocate_lock()
-
 
 # @itchat.msg_register(itchat.content.TEXT)
 # def debug_msg(msg):
@@ -167,14 +165,14 @@ def receive_msg(msg):
         friend_name = msg['User']['UserName']
     # show received message
     if msg['FromUserName'] == msg['User']['UserName']:
-        print(f"\n[{time_}] {friend_name} -> {username} : {content}\n",
+        print(f"\n[{time_}] {friend_name} -> {username} : {content}\n" +
+              Fore.YELLOW + "~> " + Style.RESET_ALL,
               end='')
-        print(Fore.YELLOW + "~> " + Style.RESET_ALL, end='')
     # show sent message
     else:
-        print(f"\n[{time_}] {username} -> {friend_name} : {content}\n",
+        print(f"\n[{time_}] {username} -> {friend_name} : {content}\n" +
+              Fore.YELLOW + "~> " + Style.RESET_ALL,
               end='')
-        print(Fore.YELLOW + "~> " + Style.RESET_ALL, end='')
     # update friend list and last FROM
     if all_friends:
         update_friends(friend_name)
@@ -197,15 +195,15 @@ def download_files(msg):
     # show received message
     if msg['FromUserName'] == msg['User']['UserName']:
         print(
-            f"\n[{time_}] {friend_name} -> {username} : {msg.fileName} received\n",
+            f"\n[{time_}] {friend_name} -> {username} : {msg.fileName} received\n"
+            + Fore.YELLOW + "~> " + Style.RESET_ALL,
             end='')
-        print(Fore.YELLOW + "~> " + Style.RESET_ALL, end='')
     # show sent message
     else:
         print(
-            f"\n[{time_}] {username} -> {friend_name} : {msg.fileName} send\n",
+            f"\n[{time_}] {username} -> {friend_name} : {msg.fileName} send\n"
+            + Fore.YELLOW + "~> " + Style.RESET_ALL,
             end='')
-        print(Fore.YELLOW + "~> " + Style.RESET_ALL, end='')
     # update friend list and last FROM
     if all_friends:
         update_friends(friend_name)

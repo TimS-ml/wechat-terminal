@@ -36,16 +36,22 @@ def show_list(friends, all_friends):
     "show friends list"
     if all_friends:
         L = len(friends)
-        index = [i for i in range(1, L+1)]
+        index = [i for i in range(1, L + 1)]
         if L < 50:
             temp = list(zip(index, friends))
             print(tabulate(temp))
         else:
-            temp = list(zip(index[:int(L/4)], friends[:int(L/4)],
-                            index[int(L/4):int(L/2)], friends[int(L/4):int(L/2)],
-                            index[int(L/2):int(L*3/4)], friends[int(L/2):int(L*3/4)],
-                            index[int(L*3/4):int(L)], friends[int(L*3/4):int(L)],
-                            ))
+            temp = list(
+                zip(
+                    index[:int(L / 4)],
+                    friends[:int(L / 4)],
+                    index[int(L / 4):int(L / 2)],
+                    friends[int(L / 4):int(L / 2)],
+                    index[int(L / 2):int(L * 3 / 4)],
+                    friends[int(L / 2):int(L * 3 / 4)],
+                    index[int(L * 3 / 4):int(L)],
+                    friends[int(L * 3 / 4):int(L)],
+                ))
             print(tabulate(temp))
     else:
         print("No friend in this list")
