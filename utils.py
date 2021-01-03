@@ -1,9 +1,7 @@
 import time
 import pickle
 from os import path
-import pprint
-# import pandas as pd
-# import numpy as np
+from tabulate import tabulate
 
 
 def save_var(username, last, friends):
@@ -41,14 +39,14 @@ def show_list(friends, all_friends):
         index = [i for i in range(1, L+1)]
         if L < 50:
             temp = list(zip(index, friends))
-            pprint.pprint(temp)
+            print(tabulate(temp))
         else:
             temp = list(zip(index[:int(L/4)], friends[:int(L/4)],
                             index[int(L/4):int(L/2)], friends[int(L/4):int(L/2)],
                             index[int(L/2):int(L*3/4)], friends[int(L/2):int(L*3/4)],
-                            index[int(L*3/4):int(L)], friends[int(L3*/4):int(L)],
+                            index[int(L*3/4):int(L)], friends[int(L*3/4):int(L)],
                             ))
-            pprint.pprint(temp)
+            print(tabulate(temp))
     else:
         print("No friend in this list")
 
