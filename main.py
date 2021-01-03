@@ -169,12 +169,12 @@ def receive_msg(msg):
     if msg['FromUserName'] == msg['User']['UserName']:
         print(f"\n[{time_}] {friend_name} -> {username} : {content}\n",
               end='')
-        print(Fore.YELLOW + "~> " + Style.RESET_ALL)
+        print(Fore.YELLOW + "~> " + Style.RESET_ALL, end='')
     # show sent message
     else:
         print(f"\n[{time_}] {username} -> {friend_name} : {content}\n",
               end='')
-        print(Fore.YELLOW + "~> " + Style.RESET_ALL)
+        print(Fore.YELLOW + "~> " + Style.RESET_ALL, end='')
     # update friend list and last FROM
     if all_friends:
         update_friends(friend_name)
@@ -199,13 +199,13 @@ def download_files(msg):
         print(
             f"\n[{time_}] {friend_name} -> {username} : {msg.fileName} received\n",
             end='')
-        print(Fore.YELLOW + "~> " + Style.RESET_ALL)
+        print(Fore.YELLOW + "~> " + Style.RESET_ALL, end='')
     # show sent message
     else:
         print(
             f"\n[{time_}] {username} -> {friend_name} : {msg.fileName} send\n",
             end='')
-        print(Fore.YELLOW + "~> " + Style.RESET_ALL)
+        print(Fore.YELLOW + "~> " + Style.RESET_ALL, end='')
     # update friend list and last FROM
     if all_friends:
         update_friends(friend_name)
