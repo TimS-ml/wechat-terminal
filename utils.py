@@ -1,6 +1,29 @@
 import time
 
 
+def save_var(username, last, friends):
+    with open('./stuff.pkl', 'wb') as f:
+        pickle.dump(username, f)
+        pickle.dump(last, f)
+        pickle.dump(friends, f)
+    print('Variable saved')
+
+
+def load_var():
+    if path.exists('./stuff.pkl'):
+        with open('./stuff.pkl', 'rb') as f:
+            username = pickle.load(f)
+            [last_from, last_to] = pickle.load(f)
+            [all_friends, recent_friends] = pickle.load(f)
+        print('Variable loaded')
+    else:
+        username = str()
+        last_from, last_to = str(), str()
+        all_friends, recent_friends = [], []
+        print('Init variable')
+    return username, last_from, last_to, all_friends, recent_friends
+
+
 def get_time():
     "get time and format it"
     return time.strftime('%H:%M:%S')
@@ -85,12 +108,13 @@ def show_help():
     print("""
   Command
     h                        Show this help guide
+    REFRESH                  Refresh friends list
     all                      List all WeChat friends of this account
     ls                       List the last 5 WeChat contacts of this accound
     q                        Log out
     f <keywords>             Search friends by keywords
-    s <message>              Send a message to the last TO (you send msg to)
     re <message>             Send a message to the last FROM (you receive msg from)
+    s <message>              Send a message to the last TO (you send msg to)
     s <message> -N <name>    Send a message to a friend specified by name
     s <message> -n <num>     Send a message to a friend specified by num
     s @fil@<filename>        Send a file (@img@ for image, @vid@ for video)

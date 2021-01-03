@@ -14,26 +14,14 @@ from pyfiglet import Figlet
 from utils import *
 
 
-if path.exists('./stuff.pkl'):
-    with open('./stuff.pkl', 'rb') as f:
-        username = pickle.load(f)
-        [last_from, last_to] = pickle.load(f)
-        [all_friends, recent_friends] = pickle.load(f)
-    print('Variable loaded')
-    # print(all_friends)
-else:
-    username = str()
-    last_from, last_to = str(), str()
-    all_friends, recent_friends = [], []
-    print('Init variable')
-
+username, last_from, last_to, all_friends, recent_friends = load_var()
 f_lock = _thread.allocate_lock()
 
 
-@itchat.msg_register(itchat.content.TEXT)
-def debug_msg(msg):
-    "monitor new message to call this function and show all info of message"
-    print(msg)
+# @itchat.msg_register(itchat.content.TEXT)
+# def debug_msg(msg):
+#     "monitor new message to call this function and show all info of message"
+#     print(msg)
 
 
 def cmd_ctrl():
@@ -46,6 +34,14 @@ def cmd_ctrl():
         return 0
     elif command_ == "h":
         show_help()
+        print()
+    elif command_ == "REFRESH":
+        try:
+            get_info()
+        except BaseException as e:
+            time.sleep(2)
+        else:
+            print("Loading friends list...")
         print()
     elif command_ == "c":
         system('clear')
@@ -211,13 +207,6 @@ def download_files(msg):
     if all_friends:
         update_friends(friend_name)
     last_from = friend_name
-
-
-def save_var(username, last, friends):
-    with open('./stuff.pkl', 'wb') as f:
-        pickle.dump(username, f)
-        pickle.dump(last, f)
-        pickle.dump(friends, f)
 
 
 # Main
