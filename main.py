@@ -12,16 +12,19 @@ from pyfiglet import Figlet
 
 from utils import *
 
+
 if path.exists('./stuff.pkl'):
     with open('./stuff.pkl', 'rb') as f:
         username = pickle.load(f)
         [last_from, last_to] = pickle.load(f)
         [all_friends, recent_friends] = pickle.load(f)
     print('Variable loaded')
+    print(all_friends)
 else:
     username = str()
     last_from, last_to = str(), str()
     all_friends, recent_friends = [], []
+    print('Init variable')
 
 f_lock = _thread.allocate_lock()
 
