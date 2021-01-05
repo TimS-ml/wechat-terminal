@@ -22,7 +22,6 @@ f_lock = _thread.allocate_lock()
 
 
 def cmd_ctrl():
-    # command = input('> ')
     command = input(Fore.YELLOW + "~> " + Style.RESET_ALL)
     command = command.strip()
     command_ = command.casefold()
