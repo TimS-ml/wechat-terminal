@@ -154,7 +154,7 @@ def send_msg(content, friend_name):
             # output sent message
             time_ = get_time()
             print(Fore.MAGENTA + f"  [{time_}] " +
-                  Fore.CYAN + f"{username}=>{friend_name}" + Style.RESET_ALL +
+                  Fore.LIGHTCYAN_EX + f"{username}=>{friend_name}" + Style.RESET_ALL +
                   f": {content}")
             # update friend list and last TO
             if all_friends:
@@ -177,13 +177,13 @@ def receive_msg(msg):
         friend_name = msg['User']['UserName']
     # show received message
     if msg['FromUserName'] == msg['User']['UserName']:
-        print(Fore.MAGENTA + f"\n  [{time_}] " + Fore.CYAN +
+        print(Fore.MAGENTA + f"\n  [{time_}] " + Fore.LIGHTCYAN_EX +
               f"{friend_name}=>{username}" + Style.RESET_ALL +
               f": {content}\n" + Fore.YELLOW + "~> " + Style.RESET_ALL,
               end='')
     # show sent message
     else:
-        print(Fore.MAGENTA + f"\n  [{time_}] " + Fore.CYAN +
+        print(Fore.MAGENTA + f"\n  [{time_}] " + Fore.LIGHTCYAN_EX +
               f"{username}=>{friend_name}" + Style.RESET_ALL +
               f": {content}\n" + Fore.YELLOW + "~> " + Style.RESET_ALL,
               end='')
@@ -206,14 +206,14 @@ def download_files(msg):
         friend_name = msg['User']['UserName']
     # show received message
     if msg['FromUserName'] == msg['User']['UserName']:
-        print(Fore.MAGENTA + f"\n  [{time_}] " + Fore.CYAN +
+        print(Fore.MAGENTA + f"\n  [{time_}] " + Fore.LIGHTCYAN_EX +
               f"{friend_name}=>{username}" + Style.RESET_ALL +
               f": {msg.fileName}" + Fore.MAGENTA + " received\n" +
               Fore.YELLOW + "~> " + Style.RESET_ALL,
               end='')
     # show sent message
     else:
-        print(Fore.MAGENTA + f"\n  [{time_}] " + Fore.CYAN +
+        print(Fore.MAGENTA + f"\n  [{time_}] " + Fore.LIGHTCYAN_EX +
               f"{username}=>{friend_name}" + Style.RESET_ALL +
               f": {msg.fileName}" + Fore.MAGENTA + " sent\n" +
               Fore.YELLOW + "~> " + Style.RESET_ALL,
