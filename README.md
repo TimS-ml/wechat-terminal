@@ -10,10 +10,24 @@ Debian netinst CD image: 150-300 MB
 Wechat 7.0.22 apk: 172 MB
 
 
+# Todo
+- [ ] Friendly file sending cli
+- [ ] Edit text in popup vim terminal
+- [ ] Pinned friend list + recent friend list
+
+
+
 # Useful Links
+## Official
+
+https://itchat.readthedocs.io/zh/latest/api/
+
 https://github.com/littlecodersh/ItChat
 
 https://itchat.readthedocs.io/zh/latest/
+
+
+## Example
 
 https://github.com/lim1942/cmd_wechat
 

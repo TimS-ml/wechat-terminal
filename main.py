@@ -197,9 +197,7 @@ def receive_msg(msg):
 @itchat.msg_register([PICTURE, RECORDING, ATTACHMENT, VIDEO])
 def download_files(msg):
     global last_from
-    # download it
     msg.download('./files/' + msg.fileName)
-    # get message time
     time_ = get_time()
     # get message sender
     if "RemarkName" in msg['User']:

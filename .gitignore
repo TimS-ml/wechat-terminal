@@ -4,5 +4,6 @@
 *.pkl
 *.png
 *.gif
+*.pdf
 Back/
 __pycache__
