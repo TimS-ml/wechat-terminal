@@ -2,8 +2,6 @@
 *.out
 *.class
 *.pkl
-*.png
-*.gif
 *.pdf
-Back/
+files/
 __pycache__
