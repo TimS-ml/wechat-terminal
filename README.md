@@ -22,7 +22,8 @@ Debian netinst CD image: 150-300 MB
 
 
 
-# Todo - [ ] Friendly file sending cli
+# Todo
+- [ ] Friendly file sending cli
 - [ ] Edit text in popup vim terminal
 - [ ] Pinned friend list + recent friend list
 
