@@ -16,7 +16,7 @@ Debian netinst CD image: 150-300 MB
 
 # Screenshots
 
-<img src="./screenshots/chat.png" alt="computer" width="80%" />
+<img src="./screenshots/chat.png" alt="computer" width="50%" />
 
 
 
