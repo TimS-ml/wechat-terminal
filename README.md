@@ -16,9 +16,9 @@ Wechat 7.0.22 (Dec.2020) apk: 31  MB
 Debian netinst CD image: 150-300 MB
 
 
-# Screenshots
+<!-- # Screenshots -->
 
-<img src="./screenshots/chat.png" alt="computer" width="50%" />
+<!-- <img src="./screenshots/chat.png" alt="computer" width="50%" /> -->
 
 
 
