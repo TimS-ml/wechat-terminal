@@ -3,5 +3,6 @@
 *.class
 *.pkl
 *.pdf
+QR.png
 files/
 __pycache__
