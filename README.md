@@ -11,6 +11,8 @@ I hate GUI, I hate to be distracted by notifications 'Moments', 'Mini Programs' 
 
 Wechat 7.0.22 (Dec.2020) apk: 172 MB
 
+Wechat 7.0.0 (Jan.2019) apk: 93  MB  <= the version I use
+
 Wechat 6.6.0 (Jan.2018) apk: 59  MB
 
 Wechat 6.3.8 (Feb.2016) apk: 31  MB
