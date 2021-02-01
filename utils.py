@@ -1,7 +1,8 @@
 import time
 import pickle
 from os import path
-from tabulate import tabulate
+# from tabulate import tabulate
+from texttable import Texttable
 
 
 def save_var(username, last, friends):
@@ -45,7 +46,6 @@ def show_list(friends):
                 index[int(L / 2):int(L)],
                 friends[int(L / 2):int(L)],
             ))
-        print(tabulate(temp))
     else:
         temp = list(
             zip(
@@ -58,7 +58,10 @@ def show_list(friends):
                 index[int(L * 3 / 4):int(L)],
                 friends[int(L * 3 / 4):int(L)],
             ))
-        print(tabulate(temp))
+    # print(tabulate(temp))
+    table = Texttable()
+    table.add_rows(temp, header=False)
+    print(table.draw())
 
 
 def find_friend(command, all_friends):
