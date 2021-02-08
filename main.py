@@ -31,7 +31,7 @@ def cmd_ctrl():
     elif command_ == "h":
         show_help()
         print()
-    elif command_ == "REFRESH":
+    elif command_ == "pre":
         try:
             get_info()
         except BaseException as e:
