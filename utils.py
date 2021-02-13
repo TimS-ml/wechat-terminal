@@ -71,7 +71,10 @@ def find_friend(command, all_friends):
     for key, friend_name in enumerate(all_friends):
         if kws in friend_name:
             temp.append([key+ 1, friend_name])
-    print(tabulate(temp))
+    # print(tabulate(temp))
+    table = Texttable()
+    table.add_rows(temp, header=False)
+    print(table.draw())
 
 
 def send_format(command, last_from, last_to, all_friends):

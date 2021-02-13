@@ -28,12 +28,15 @@ def cmd_ctrl():
     # skip space
     if command == "":
         return 0
+    elif command_ == "l":
+        print('To: ', last_to, '\nFrom: ', last_from)
     elif command_ == "h":
         show_help()
         print()
     elif command_ == "pre":
         try:
             get_info()
+            print("Info geted")
         except BaseException as e:
             time.sleep(2)
         else:
